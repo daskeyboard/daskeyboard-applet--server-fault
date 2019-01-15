@@ -1,0 +1,49 @@
+{
+  "name": "daskeyboard-applet--server-fault",
+  "displayName": "Server Fault",
+  "publisher": "Das Keyboard",
+  "version": "1.0.0",
+  "officialProductName": "Server Fault",
+  "appUrl": "https://serverfault.com",
+  "description": "Notifies for unread inbox items.",
+  "longDescription": "Tracks Server Fault inbox items on a Das Keyboard Q keyboard. Requires a Server Fault account",
+  "icon": "assets/icon.png",
+  "videoUrl": "",
+  "publisherName": "Das Keyboard",
+  "authorName": "Das Keyboard",
+  "authorUrl": "https://twitter.com/daskeyboard",
+  "issuesUrl": "https://github.com/daskeyboard/daskeyboard-applet--server-fault/issues",
+  "homePageUrl": "https://serverfault.com",
+  "developerRepoUrl": "https://github.com/daskeyboard/daskeyboard-applet--server-fault",
+  "licenseUrl": "http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt",
+  "changelogUrl": "CHANGELOG.md",
+  "license": "MIT",
+  "readMeUrl": "README.md",
+  "readMeEndUserUrl": "README_ENDUSER.md",
+  "engines": {
+    "das-keyboard-q": "3.1.1"
+  },
+  "isSingleton": false,
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "watch": "nodemon .",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "daskeyboard-applet": "^2.11.1",
+    "request-promise": "^4.2.2"
+  },
+  "qConfig": {
+    "geometry": {
+      "width": 1,
+      "height": 1
+    },
+    "authorization": {
+      "type": "oauth2"
+    }
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
