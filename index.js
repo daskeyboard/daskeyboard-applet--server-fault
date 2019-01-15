@@ -85,9 +85,10 @@ class QServerfault extends q.DesktopApp {
     }
   }
 
-  /** ping Montastic and set the signal  */
+  /** Get the inbox from stackoverflow then send correct signal  */
   async run() {
     return this.getInbox().then(body => {
+      console.log('body', body);
       this.deleteOldSignals();
       // if no unread items. NO signal created
       if (body.items.length === 0) {
@@ -98,7 +99,7 @@ class QServerfault extends q.DesktopApp {
       const signalColor = '#0000FF';
       const signalEffect = q.Effects.BLINK;
 
-      /* Get the latest inbox item from Server Fault api response */
+      /* Get the latest inbox item from stack overflow api response */
       const latestInboxItem = new ServerFaultInboxItem(body.items[0]);
       // construct signal message
       const signalMessage = `${latestInboxItem.getMessageDependingOnItemType()}:`
@@ -116,10 +117,10 @@ class QServerfault extends q.DesktopApp {
       })
       return signal;
     }).catch(err => {
-      logger.error(`Error while getting serverfault inbox ${err}`);
+      logger.error(`Error while getting stackoverflow inbox ${err}`);
       // reset auth credential
       this.oauthCredentials = null;
-      return q.Signal.error([`Error while getting serverfault inbox`]);
+      return q.Signal.error([`Error while getting stackoverflow inbox`]);
     });
   }
 
@@ -139,7 +140,7 @@ class QServerfault extends q.DesktopApp {
           'Accept-Encoding': 'GZIP'
         },
         gzip: true,
-        uri: apiUrl + `/me/inbox/unread`,
+        uri: apiUrl + `/me/inbox`,
         method: 'GET',
         qs: {
           site: 'serverfault',
@@ -150,7 +151,20 @@ class QServerfault extends q.DesktopApp {
         // resolveWithFullResponse: true
       }
 
-      return request(options);
+      return request(options).then(result => {
+        try {
+          // try to filter only the result for stack overflow
+          if (result.items) {
+            result.items = result.items.filter(item => {
+              return item.site && item.site.api_site_parameter === 'serverfault';
+            });
+          }
+        } catch (err) {
+          logger.error(`Error when trying to filter items ${err}`);
+          // return the initial result
+        }
+        return result;
+      });
     }).catch(err => {
       logger.error(`Error when trying to fetch user questions: ${err}`);
       throw new Error(`Error when trying to fetch user questions`);
@@ -202,7 +216,7 @@ class QServerfault extends q.DesktopApp {
 }
 
 
-const serverfault = new QServerfault();
+const stackoverflow = new QServerfault();
 
 module.exports = {
   QServerfault: QServerfault
