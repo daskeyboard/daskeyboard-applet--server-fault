@@ -89,11 +89,11 @@ class QServerfault extends q.DesktopApp {
   async run() {
     return this.getInbox().then(body => {
       console.log('body', body);
-      this.deleteOldSignals();
       // if no unread items. NO signal created
       if (body.items.length === 0) {
         return null;
       }
+      this.deleteOldSignals();
 
       /* Blink in blud for a new notification */
       const signalColor = '#0000FF';
