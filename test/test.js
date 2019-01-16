@@ -10,7 +10,7 @@ process.env = {
 const index = require('../index');
 const apiKey = require('./auth.json').apiKey;
 
-describe('QStackoverflow', () => {
+describe('QServerfault', () => {
   describe('#run()', () => {
     it('should run correctly', async function () {
       return buildApp().then(app => {
@@ -25,7 +25,7 @@ describe('QStackoverflow', () => {
 
 
 async function buildApp() {
-  let app = new index.QStackoverflow();
+  let app = new index.QServerfault();
   return app.processConfig({
     authorization: {
       apiKey: apiKey
