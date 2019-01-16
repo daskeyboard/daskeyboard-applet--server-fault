@@ -87,7 +87,7 @@ class QServerfault extends q.DesktopApp {
 
   /** Get the inbox from stackoverflow then send correct signal  */
   async run() {
-    return this.getInbox().then(body => {
+    return this.getUnreadInbox().then(body => {
       this.deleteOldSignals();
       // if no unread items. NO signal created
       if (body.items.length === 0) {
@@ -116,17 +116,17 @@ class QServerfault extends q.DesktopApp {
       })
       return signal;
     }).catch(err => {
-      logger.error(`Error while getting stackoverflow inbox ${err}`);
+      logger.error(`Error while getting serverfault inbox ${err}`);
       // reset auth credential
       this.oauthCredentials = null;
-      return q.Signal.error([`Error while getting stackoverflow inbox`]);
+      return q.Signal.error([`Error while getting serverfault inbox`]);
     });
   }
 
   /**
    * Get the inbox of the user logged in the applet
    */
-  async getInbox() {
+  async getUnreadInbox() {
     logger.info(`Getting Inbox`);
     return this.getOauthClientKeysFromProxy().then(oauthCredentials => {
       logger.info(`Got Oauth client keys from proxy`);
@@ -215,7 +215,7 @@ class QServerfault extends q.DesktopApp {
 }
 
 
-const stackoverflow = new QServerfault();
+const serverfault = new QServerfault();
 
 module.exports = {
   QServerfault: QServerfault
