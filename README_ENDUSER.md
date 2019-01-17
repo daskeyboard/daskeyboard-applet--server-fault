@@ -1,10 +1,9 @@
 # Server Fault
 
-This applet notifies for unread inbox items from a Server Fault account by
+Displays Server Fault notifications for unread inbox items by
 making a Das Keyboard Q key blink in blue.
 
-Server Fault is a question and answer site for system and network administrators. It's built and run by you as part of the Stack Exchange network of Q&A sites. With your help, we're working together to build a library of detailed answers to every question about programming.
-
+Server Fault is a question and answer site for system and network administrators.
 For more information visit <https://serverfault.com/>.
 
-![Server Fault inbox items on a Das Keybaord Q](assets/image.png "Server Fault alerts")
+![Server Fault on a Das Keybaord Q](assets/image.png "Das Keyboard Server Fault applet")
