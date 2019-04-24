@@ -87,6 +87,7 @@ class QServerfault extends q.DesktopApp {
 
   /** Get the inbox from stackoverflow then send correct signal  */
   async run() {
+    logger.info("Server Fault running.");
     return this.getUnreadInbox().then(body => {
       this.deleteOldSignals();
       // if no unread items. NO signal created
@@ -115,11 +116,16 @@ class QServerfault extends q.DesktopApp {
         }
       })
       return signal;
-    }).catch(err => {
-      logger.error(`Error while getting serverfault inbox ${err}`);
+    }).catch(error => {
+      logger.error(`Error while getting serverfault inbox ${error}`);
+      if(`${error.message}`.includes("getaddrinfo")){
+        return q.Signal.error(
+          'The Server Fault service returned an error. <b>Please check your internet connection</b>.'
+        );
+      }
       // reset auth credential
       this.oauthCredentials = null;
-      return q.Signal.error([`Error while getting serverfault inbox`]);
+      return q.Signal.error([`Error while getting Server Fault inbox`]);
     });
   }
 
