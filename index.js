@@ -118,14 +118,16 @@ class QServerfault extends q.DesktopApp {
       return signal;
     }).catch(error => {
       logger.error(`Error while getting serverfault inbox ${error}`);
-      if(`${error.message}`.includes("getaddrinfo")){
-        return q.Signal.error(
-          'The Server Fault service returned an error. <b>Please check your internet connection</b>.'
-        );
-      }
       // reset auth credential
       this.oauthCredentials = null;
-      return q.Signal.error([`Error while getting Server Fault inbox. Detail: ${error}`]);
+      if(`${error.message}`.includes("getaddrinfo")){
+        // Do not send signal
+        // return q.Signal.error(
+        //   'The Server Fault service returned an error. <b>Please check your internet connection</b>.'
+        // );
+      }else{
+        return q.Signal.error([`Error while getting Server Fault inbox. Detail: ${error}`]);
+      }
     });
   }
 
