@@ -2,7 +2,7 @@
   "name": "daskeyboard-applet--server-fault",
   "displayName": "Server Fault",
   "publisher": "Das Keyboard",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "officialProductName": "Server Fault",
   "appUrl": "https://serverfault.com",
   "description": "Notifies for unread inbox items.",
